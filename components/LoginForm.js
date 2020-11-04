@@ -2,8 +2,8 @@ import { useState } from 'react';
 import { loginUser } from '../lib/auth';
 
 export default function LoginForm() {
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
+    const [email, setEmail] = useState("Sherwood@rosamond.me");
+    const [password, setPassword] = useState("jacynthe.com");
 
     const handleChange = event => {
         if (event.target.name === "password") {
@@ -26,6 +26,7 @@ export default function LoginForm() {
                     type="email" 
                     name="email" 
                     placeholder="Email" 
+                    value={email}
                     onChange={handleChange}
                 />
             </div>
@@ -34,6 +35,7 @@ export default function LoginForm() {
                     type="password"
                     name="password" 
                     placeholder="Password" 
+                    value={password}
                     onChange={handleChange}
                 />
             </div>
