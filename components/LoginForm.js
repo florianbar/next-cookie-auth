@@ -6,6 +6,8 @@ import { loginUser } from '../lib/auth';
 export default function LoginForm() {
     const [email, setEmail] = useState("Sherwood@rosamond.me");
     const [password, setPassword] = useState("jacynthe.com");
+    const [errorMessage, setErrorMessage] = useState("");
+    const [isLoading, setIsLoading] = useState(false);
 
     const handleChange = event => {
         if (event.target.name === "password") {
@@ -18,9 +20,23 @@ export default function LoginForm() {
 
     const handleSubmit = event => {
         event.preventDefault();
-        loginUser(email, password).then(() => {
-            Router.push("/profile");
-        });
+
+        setIsLoading(true);
+        setErrorMessage("");
+
+        loginUser(email, password)
+            .then(() => {
+                setIsLoading(false);
+                Router.push("/profile");
+            })
+            .catch(showError);
+    };
+
+    const showError = error => {
+        console.log(error);
+        const errorMessage = error.response && error.response.data || error.message;
+        setErrorMessage(errorMessage);
+        setIsLoading(false);
     };
 
     return (
@@ -43,7 +59,10 @@ export default function LoginForm() {
                     onChange={handleChange}
                 />
             </div>
-            <button type="submit">Submit</button>
+            <button disabled={isLoading} type="submit">
+                {isLoading ? "Sending" : "Submit"}
+            </button>
+            {errorMessage && <div>{errorMessage}</div>}
         </form>
     );
 }
