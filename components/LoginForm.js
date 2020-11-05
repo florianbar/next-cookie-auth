@@ -33,7 +33,6 @@ export default function LoginForm() {
     };
 
     const showError = error => {
-        console.log(error);
         const errorMessage = error.response && error.response.data || error.message;
         setErrorMessage(errorMessage);
         setIsLoading(false);

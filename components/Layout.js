@@ -1,21 +1,33 @@
 import Link from 'next/link';
 
-export default function Layout({ children, title }) {
+export default function Layout({ children, title, auth }) {
+    const { user = {} } = auth || {};
+
+    // console.log("[Layout]", auth);
+
     return (
         <div className="root">
             <nav className="navbar">
-                <span>Welcome, <strong>Guest</strong></span>
+                <span>Welcome, <strong>{user.name || "Guest"}</strong></span>
                 <div>
                     <Link href="/">
                         <a>Home</a> 
                     </Link>
-                    <Link href="/profile">
-                        <a>Profile</a>
-                    </Link>
-                    <button>Logout</button>
-                    <Link href="/login">
-                        <a>Login</a>
-                    </Link>
+
+                    {user.email ? (
+                        // Auth navigation
+                        <>
+                            <Link href="/profile">
+                                <a>Profile</a>
+                            </Link>
+                            <button>Logout</button>
+                        </>
+                    ) : (
+                        // Unauth navigation
+                        <Link href="/login">
+                            <a>Login</a>
+                        </Link>
+                    )}
                 </div>
             </nav>
 

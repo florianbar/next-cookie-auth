@@ -2,16 +2,6 @@ import Document, { Html, Head, Main, NextScript } from 'next/document';
 
 import { getServerSideToken, getUserScript } from '../lib/auth';
 
-export async function getStaticProps(context) {
-    const props = await Document.getInitialProps(context);
-    const userData = await getServerSideToken(context.req);
-  
-    return { 
-        ...props, 
-        ...userData 
-    };
-};
-
 export default class MyDocument extends Document {
     render() {
         const { user = {} } = this.props;
@@ -26,5 +16,17 @@ export default class MyDocument extends Document {
                 </body>
             </Html>
         );
+    }
+};
+
+MyDocument.getInitialProps = async (context) => {
+    const props = await Document.getInitialProps(context);
+    const userData = await getServerSideToken(context.req);
+
+    console.log("[_document]", userData);
+  
+    return { 
+        ...props, 
+        ...userData 
     };
 };
