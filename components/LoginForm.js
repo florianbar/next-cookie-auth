@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import Router from 'next/router';
+
 import { loginUser } from '../lib/auth';
 
 export default function LoginForm() {
@@ -16,7 +18,9 @@ export default function LoginForm() {
 
     const handleSubmit = event => {
         event.preventDefault();
-        loginUser(email, password);
+        loginUser(email, password).then(() => {
+            Router.push("/profile");
+        });
     };
 
     return (
