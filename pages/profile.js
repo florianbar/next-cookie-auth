@@ -4,7 +4,6 @@ import Layout from '../components/Layout';
 import { getUserProfile, authInitialProps } from '../lib/auth';
 
 export default function Profile(props) {
-
     const [user, setUser] = useState(null);
 
     useEffect(() => { 

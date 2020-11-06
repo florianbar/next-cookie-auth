@@ -1,9 +1,9 @@
 import Link from 'next/link';
 
+import { logoutUser } from '../lib/auth';
+
 export default function Layout({ children, title, auth }) {
     const { user = {} } = auth || {};
-
-    // console.log("[Layout]", auth);
 
     return (
         <div className="root">
@@ -20,7 +20,7 @@ export default function Layout({ children, title, auth }) {
                             <Link href="/profile">
                                 <a>Profile</a>
                             </Link>
-                            <button>Logout</button>
+                            <button onClick={logoutUser}>Logout</button>
                         </>
                     ) : (
                         // Unauth navigation
