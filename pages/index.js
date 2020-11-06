@@ -13,4 +13,8 @@ export default function Index(props) {
     );
 };
 
-Index.getInitialProps = authInitialProps();
+export async function getServerSideProps(context) {
+    console.log("[Index][getServerSideProps]");
+    const auth = authInitialProps(context);
+    return { props: auth };
+};

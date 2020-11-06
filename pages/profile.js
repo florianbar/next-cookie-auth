@@ -20,4 +20,8 @@ export default function Profile(props) {
     );
 };
 
-Profile.getInitialProps = authInitialProps();
+export async function getServerSideProps(context) {
+    console.log("[Profile][getServerSideProps]");
+    const auth = authInitialProps(context);
+    return { props: auth };
+};
