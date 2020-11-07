@@ -15,6 +15,6 @@ export default function Index(props) {
 
 export async function getServerSideProps(context) {
     console.log("[Index][getServerSideProps]");
-    const auth = authInitialProps(context);
+    const auth = authInitialProps()(context);
     return { props: auth };
 };
