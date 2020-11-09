@@ -1,25 +1,31 @@
 import { useEffect, useState } from 'react';
+import Router from 'next/router';
 
 import Layout from '../components/Layout';
-import { getUserProfile, authInitialProps } from '../lib/auth';
+import { getUserProfile, authInitialProps, isAnonymousUser } from '../lib/auth';
 
 export default function Profile(props) {
     const [user, setUser] = useState(null);
+    const isAnonymous = isAnonymousUser(props.auth.user)
 
-    useEffect(() => { 
-        getUserProfile().then(user => {
-            setUser(user);
-        });
-    }, [getUserProfile]);
+    useEffect(() => {
+        if (isAnonymous) {
+            Router.replace("/login");
+        } else {
+            getUserProfile().then(user => {
+                setUser(user);
+            });
+        }
+    }, [getUserProfile, isAnonymous, setUser]);
 
-    return (
+    return isAnonymous && (
         <Layout title="Profile" {...props}>
             <pre>{JSON.stringify(user, null, 2)}</pre>
         </Layout>
     );
 };
 
-Profile.getInitialProps = async (context) => {
+export async function getServerSideProps(context) {
     const auth = authInitialProps(true)(context);
     return { props: auth };
 };

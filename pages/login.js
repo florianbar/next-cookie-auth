@@ -11,7 +11,6 @@ export default function Login(props) {
 };
 
 export async function getServerSideProps(context) {
-    console.log("[Profile][getServerSideProps]");
     const auth = authInitialProps()(context);
     return { props: auth };
 };
